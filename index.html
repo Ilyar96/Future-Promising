@@ -28,7 +28,7 @@
 				<div class="products__container container">
 					<div class="products__list">
 						<!-- Card 1 -->
-						<div class="product-card product-card--spot">
+						<div class="product-card">
 							<div class="product-card__title">MICROBT WhatsMiner M50 130Th</div>
 							<div class="product-card__image">
 								<div class="product-card__badge">SPOT</div>
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 						<!-- Card 2 -->
-						<div class="product-card product-card--spot">
+						<div class="product-card">
 							<div class="product-card__title">MICROBT WhatsMiner M50 136Th</div>
 							<div class="product-card__image">
 								<div class="product-card__badge">SPOT</div>
@@ -81,7 +81,7 @@
 							</div>
 						</div>
 						<!-- Card 3 -->
-						<div class="product-card product-card--spot">
+						<div class="product-card">
 							<div class="product-card__title">MICROBT WhatsMiner M50S+ 142Th</div>
 							<div class="product-card__image">
 								<div class="product-card__badge">SPOT</div>
@@ -127,6 +127,28 @@
 		</footer>
 	</div>
 
+	<!-- Sidebar Cart -->
+	<div class="cart-sidebar" id="cartSidebar">
+		<div class="cart-sidebar__overlay" id="cartSidebarOverlay"></div>
+		<div class="cart-sidebar__content">
+			<div class="cart-sidebar__header">
+				<h2>Корзина</h2>
+				<button class="cart-sidebar__close" id="cartSidebarClose">&times;</button>
+			</div>
+			<div class="cart-sidebar__list" id="cartSidebarList">
+				<!-- Список товаров будет рендериться через JS -->
+			</div>
+			<div class="cart-sidebar__footer">
+				<div class="cart-sidebar__total">
+					<span>Итого:</span>
+					<span id="cartSidebarTotal">$0</span>
+				</div>
+				<button class="cart-sidebar__clear" id="cartSidebarClear">Clear</button>
+				<button class="cart-sidebar__checkout" id="cartSidebarCheckout">Checkout</button>
+			</div>
+		</div>
+	</div>
+
 	<div class="modal" id="modal">
 		<div class="modal__overlay"></div>
 		<div class="modal__content">
@@ -136,11 +158,11 @@
 				<!-- Здесь будет информация о товаре -->
 			</div>
 			<form class="modal__form" id="modalForm">
-				<input type="text" placeholder="Ваше имя" required>
-				<input type="tel" placeholder="Телефон" required>
-				<input type="email" placeholder="Email" required>
-				<textarea placeholder="Комментарий"></textarea>
-				<button type="submit">Отправить заявку</button>
+				<input type="text" placeholder="Your name" required>
+				<input type="tel" placeholder="Your phone" required>
+				<input type="email" placeholder="Your email" required>
+				<textarea placeholder="Your comment"></textarea>
+				<button type="submit">Send request</button>
 			</form>
 		</div>
 	</div>
