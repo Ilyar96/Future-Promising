@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="assests/css/main.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header__container container">
+				<div class="header__logo">Logo</div>
+				<button class="header__cart" type="button">
+					<span>Cart</span>
+					<span id="headerCartCount" class="header__cart-count">0</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="page">
+			<section class="products">
+				<div class="products__container container">
+					<div class="products__list">
+						<!-- Card 1 -->
+						<div class="product-card product-card--spot">
+							<div class="product-card__title">MICROBT WhatsMiner M50 130Th</div>
+							<div class="product-card__image">
+								<div class="product-card__badge">SPOT</div>
+								<img src="assests/img/M50S.png" alt="WhatsMiner M50 130Th">
+							</div>
+							<div class="product-card__info">
+								<div class="product-card__info-item">Hashrate: <span>130TH</span></div>
+								<div class="product-card__info-item">Power: <span>3478W</span></div>
+								<div class="product-card__info-item">Power efficiency: <span>26.8J/TH</span></div>
+								<div class="product-card__price">
+									<span class="product-card__price-unit">$</span>
+									<span class="product-card__prcvalue">900</span>
+								</div>
+							</div>
+							<div class="product-card__footer">
+								<button class="product-card__add-to-cart" data-product="m50-130">Add to cart</button>
+								<button class="product-card__buy-btn" style="display: none;">Buy now</button>
+
+								<div class="product-card__quantity">
+									<button class="product-card__quantity-btn product-card__quantity-btn--minus" type="button">-</button>
+									<span class="product-card__quantity-value">0</span>
+									<button class="product-card__quantity-btn product-card__quantity-btn--plus" type="button">+</button>
+								</div>
+							</div>
+						</div>
+						<!-- Card 2 -->
+						<div class="product-card product-card--spot">
+							<div class="product-card__title">MICROBT WhatsMiner M50 136Th</div>
+							<div class="product-card__image">
+								<div class="product-card__badge">SPOT</div>
+								<img src="assests/img/M50S.png" alt="WhatsMiner M50 136Th">
+							</div>
+							<div class="product-card__info">
+								<div class="product-card__info-item">Hashrate: <span>136TH</span></div>
+								<div class="product-card__info-item">Power: <span>3478W</span></div>
+								<div class="product-card__info-item">Power efficiency: <span>25.6J/TH</span></div>
+								<div class="product-card__price">
+									<span class="product-card__price-unit">$</span>
+									<span class="product-card__prcvalue">990</span>
+								</div>
+							</div>
+							<div class="product-card__footer">
+								<button class="product-card__add-to-cart" data-product="m50-136">Add to cart</button>
+								<button class="product-card__buy-btn" style="display: none;">Buy now</button>
+								<div class="product-card__quantity">
+									<button class="product-card__quantity-btn product-card__quantity-btn--minus" type="button">-</button>
+									<span class="product-card__quantity-value">0</span>
+									<button class="product-card__quantity-btn product-card__quantity-btn--plus" type="button">+</button>
+								</div>
+							</div>
+						</div>
+						<!-- Card 3 -->
+						<div class="product-card product-card--spot">
+							<div class="product-card__title">MICROBT WhatsMiner M50S+ 142Th</div>
+							<div class="product-card__image">
+								<div class="product-card__badge">SPOT</div>
+								<img src="assests/img/M50Sp.png" alt="WhatsMiner M50S+ 142Th">
+							</div>
+							<div class="product-card__info">
+								<div class="product-card__info-item">Hashrate: <span>142TH</span></div>
+								<div class="product-card__info-item">Power: <span>3478W</span></div>
+								<div class="product-card__info-item">Power efficiency: <span>24.5J/TH</span></div>
+								<div class="product-card__price">
+									<span class="product-card__price-unit">$</span>
+									<span class="product-card__prcvalue">1150</span>
+								</div>
+							</div>
+							<div class="product-card__footer">
+								<button class="product-card__add-to-cart" data-product="m50splus-142">Add to cart</button>
+								<button class="product-card__buy-btn" style="display: none;">Buy now</button>
+								<div class="product-card__quantity">
+									<button class="product-card__quantity-btn product-card__quantity-btn--minus" type="button">-</button>
+									<span class="product-card__quantity-value">0</span>
+									<button class="product-card__quantity-btn product-card__quantity-btn--plus" type="button">+</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__company">
+					FUTUTE PROMISING COMPANY LIMITED
+				</div>
+				<div class="footer__address">
+					CIC (HU NAN) SUPPLY CHAIN CO., LTD.<br>
+					Room 2408-09, Luguyuyuan F2, No.27 Wenxuan Road, Gaoxin Development Zone, Changsha
+				</div>
+				<div class="footer__copyright">
+					&copy; 2024 FUTUTE PROMISING COMPANY LIMITED. Все права защищены.
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<div class="modal" id="modal">
+		<div class="modal__overlay"></div>
+		<div class="modal__content">
+			<button class="modal__close" id="modalClose">&times;</button>
+			<div class="modal__title" id="modalTitle">Название товара</div>
+			<div class="modal__details" id="modalDetails">
+				<!-- Здесь будет информация о товаре -->
+			</div>
+			<form class="modal__form" id="modalForm">
+				<input type="text" placeholder="Ваше имя" required>
+				<input type="tel" placeholder="Телефон" required>
+				<input type="email" placeholder="Email" required>
+				<textarea placeholder="Комментарий"></textarea>
+				<button type="submit">Отправить заявку</button>
+			</form>
+		</div>
+	</div>
+	<script src="assests/js/main.js"></script>
+</body>
+
+</html>
