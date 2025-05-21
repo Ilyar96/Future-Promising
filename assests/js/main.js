@@ -327,3 +327,19 @@ modalForm.addEventListener("submit", function (e) {
 		}, 300);
 	}, 2000);
 });
+
+// --- SIDEBAR CART LOGIC END ---
+
+function checkScroll() {
+	const header = document.querySelector(".header");
+
+	if (window.scrollY > 0) {
+		header.classList.add("scrolled");
+	} else {
+		header.classList.remove("scrolled");
+	}
+}
+
+checkScroll();
+
+window.addEventListener("scroll", checkScroll);
