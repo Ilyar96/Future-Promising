@@ -129,6 +129,33 @@
 	});
 	// --- CART LOGIC END ---
 
+	// === UNIVERSAL MODAL LOGIC ===
+	function openModal(modal) {
+		if (!modal) return;
+		modal.classList.add("active");
+		lockBodyScroll();
+	}
+	function closeModal(modal) {
+		if (!modal) return;
+		modal.classList.remove("active");
+		unlockBodyScroll();
+	}
+	function bindModalEvents(
+		modal,
+		closeBtnSelector = ".modal__close",
+		overlaySelector = ".modal__overlay"
+	) {
+		if (!modal) return;
+		const closeBtn = modal.querySelector(closeBtnSelector);
+		const overlay = modal.querySelector(overlaySelector);
+		if (closeBtn) {
+			closeBtn.addEventListener("click", () => closeModal(modal));
+		}
+		if (overlay) {
+			overlay.addEventListener("click", () => closeModal(modal));
+		}
+	}
+
 	// --- SIDEBAR CART LOGIC ---
 	const cartSidebar = document.getElementById("cartSidebar");
 	const cartSidebarOverlay = document.getElementById("cartSidebarOverlay");
@@ -166,13 +193,11 @@
 	}
 
 	function openCartSidebar() {
-		cartSidebar.classList.add("active");
-		lockBodyScroll();
+		openModal(cartSidebar);
 		renderCartSidebar();
 	}
 	function closeCartSidebar() {
-		cartSidebar.classList.remove("active");
-		unlockBodyScroll();
+		closeModal(cartSidebar);
 	}
 
 	// Open cart sidebar by clicking on the cart button in the header
@@ -313,8 +338,7 @@
 		// Show form
 		modalForm.style.display = "";
 
-		modal.classList.add("active");
-		lockBodyScroll();
+		openModal(modal);
 	}
 
 	cartSidebarCheckout.addEventListener("click", function () {
@@ -323,15 +347,7 @@
 		setTimeout(openModalWithCart, 300); // smooth close sidebar
 	});
 
-	modalClose.addEventListener("click", function () {
-		modal.classList.remove("active");
-		unlockBodyScroll();
-	});
-
-	document.querySelector(".modal__overlay").addEventListener("click", function () {
-		modal.classList.remove("active");
-		unlockBodyScroll();
-	});
+	bindModalEvents(modal);
 
 	modalForm.addEventListener("submit", async function (e) {
 		e.preventDefault();
@@ -352,14 +368,13 @@
 
 		// Show success message
 		modalDetails.innerHTML =
-			'<div id="modalOrderStatus" style="color:green;text-align:center;font-weight:600;padding:20px;">Your order has been sent successfully!</div>';
+			'<div id="modalOrderStatus" style="color:var(--color-success,green);text-align:center;font-weight:600;padding:20px;">Your order has been sent successfully!</div>';
 
 		setCart([]);
 		initCartUI();
 
 		setTimeout(() => {
-			modal.classList.remove("active");
-			unlockBodyScroll();
+			closeModal(modal);
 			// Return form to the initial state after a short delay
 			setTimeout(() => {
 				document.getElementById("modalOrderStatus").remove();
@@ -370,6 +385,29 @@
 	});
 
 	// --- SIDEBAR CART LOGIC END ---
+
+	// === CONTACT FORM LOGIC ===
+	const contactForm = document.getElementById("contactForm");
+	const contactSuccessModal = document.getElementById("contactSuccessModal");
+	const contactSuccessModalClose = document.getElementById("contactSuccessModalClose");
+	if (contactForm) {
+		contactForm.addEventListener("submit", async function (e) {
+			e.preventDefault();
+			const submitBtn = contactForm.querySelector("button[type='submit']");
+			const submitButtonText = submitBtn.textContent;
+			submitBtn.disabled = true;
+			submitBtn.textContent = "Sending...";
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+			submitBtn.disabled = false;
+			submitBtn.textContent = submitButtonText;
+			contactForm.reset();
+			openModal(contactSuccessModal);
+			setTimeout(() => {
+				closeModal(contactSuccessModal);
+			}, 2000);
+		});
+	}
+	bindModalEvents(contactSuccessModal);
 
 	function checkScroll() {
 		const header = document.querySelector(".header");

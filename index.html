@@ -36,6 +36,8 @@
 
 			<section id="products" class="products">
 				<div class="products__container container">
+					<h2 class="products__title">Product catalog</h2>
+					<p class="products__desc">Browse our selection of top ASIC miners for efficient and reliable cryptocurrency mining.</p>
 					<div class="products__list">
 						<!-- Card 1 -->
 						<div class="product-card">
@@ -199,6 +201,19 @@
 					</div>
 				</div>
 			</section>
+
+			<section class="contact" id="contact">
+				<div class="contact__container container">
+					<h2 class="contact__title">Contact Us</h2>
+					<p class="contact__subtitle">Have questions or need assistance? Fill out the form below and our team will get back to you soon.</p>
+					<form class="contact__form" id="contactForm">
+						<input type="text" name="name" placeholder="Your name" required>
+						<input type="email" name="email" placeholder="Your email" required>
+						<textarea name="message" placeholder="Your message" required></textarea>
+						<button type="submit">Send message</button>
+					</form>
+				</div>
+			</section>
 		</main>
 
 		<footer class="footer">
@@ -215,6 +230,16 @@
 				</div>
 			</div>
 		</footer>
+	</div>
+
+	<!-- Contact Success Modal -->
+	<div class="modal" id="contactSuccessModal">
+		<div class="modal__overlay"></div>
+		<div class="modal__content">
+			<button class="modal__close" id="contactSuccessModalClose">&times;</button>
+			<div class="modal__title">Thank you!</div>
+			<div class="modal__details">Your message has been sent successfully. We will contact you soon.</div>
+		</div>
 	</div>
 
 	<!-- Sidebar Cart -->

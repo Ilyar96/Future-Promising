@@ -6,6 +6,7 @@
 	--color-accent: #e6e8ff;
 	--color-danger: #e74c3c;
 	--color-danger-hover: #c0392b;
+	--color-success: #27ae60;
 	--color-text: #222;
 	--color-price: #1a1a1a;
 	--color-button: #fff;
@@ -716,7 +717,7 @@ hr {
 }
 .modal__details {
 	font-size: 1rem;
-	color: var(--color-text);
+	color: var(--color-success);
 	margin-bottom: 16px;
 	text-align: center;
 }
@@ -1096,4 +1097,70 @@ hr {
 	.products__list {
 		grid-template-columns: repeat(1, 1fr);
 	}
+}
+
+.products__title {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	text-align: center;
+	margin-bottom: 16px;
+}
+.products__desc {
+	font-size: 1.1rem;
+	color: #222;
+	text-align: center;
+	margin-bottom: 32px;
+}
+
+.contact {
+	background: #fff;
+	padding: 80px 0;
+}
+.contact__container {
+	max-width: 500px;
+	text-align: center;
+}
+.contact__title {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	margin-bottom: 16px;
+}
+.contact__subtitle {
+	font-size: 1.1rem;
+	color: #222;
+	margin-bottom: 32px;
+}
+.contact__form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.contact__form input,
+.contact__form textarea {
+	padding: 12px;
+	border: 1px solid var(--color-border);
+	border-radius: 6px;
+	font-size: 1rem;
+	font-family: inherit;
+	resize: none;
+}
+.contact__form textarea {
+	min-height: 100px;
+	resize: vertical;
+}
+.contact__form button {
+	background: var(--color-primary);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 14px 0;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.contact__form button:hover {
+	background: var(--color-button-hover);
 }
