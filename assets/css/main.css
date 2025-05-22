@@ -567,7 +567,7 @@ hr {
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	margin-bottom: 16px;
+	margin: auto 0 16px;
 }
 .product-card__image img {
 	width: 100%;

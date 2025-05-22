@@ -333,8 +333,19 @@
 		unlockBodyScroll();
 	});
 
-	modalForm.addEventListener("submit", function (e) {
+	modalForm.addEventListener("submit", async function (e) {
 		e.preventDefault();
+
+		// Form loading state
+		const submitBtn = modalForm.querySelector("button[type='submit']");
+		const submitButtonText = submitBtn.textContent;
+		submitBtn.disabled = true;
+		submitBtn.textContent = "Sending...";
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		submitBtn.disabled = false;
+		submitBtn.textContent = submitButtonText;
 
 		// Hide form
 		modalForm.style.display = "none";
