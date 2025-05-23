@@ -93,31 +93,46 @@
 		const minusBtn = quantityBlock.querySelector(".product-card__quantity-btn--minus");
 		const plusBtn = quantityBlock.querySelector(".product-card__quantity-btn--plus");
 
-		minusBtn.addEventListener("click", function (e) {
+		// Снимаем все старые обработчики (если вдруг были)
+		const newMinusBtn = minusBtn.cloneNode(true);
+		const newPlusBtn = plusBtn.cloneNode(true);
+		minusBtn.parentNode.replaceChild(newMinusBtn, minusBtn);
+		plusBtn.parentNode.replaceChild(newPlusBtn, plusBtn);
+
+		newPlusBtn.addEventListener("click", function (e) {
 			e.stopPropagation();
-			let cart = getCart();
+			let cart = JSON.parse(localStorage.getItem("cart")) || [];
 			let item = cart.find((i) => i.id === productId);
 			if (item) {
-				item.quantity -= 1;
+				item.quantity++;
+			} else {
+				const name = card.querySelector(".product-card__title").textContent.trim();
+				const price = parseFloat(card.querySelector(".product-card__prcvalue").textContent.trim());
+				item = { id: productId, name, price, quantity: 1 };
+				cart.push(item);
+			}
+			localStorage.setItem("cart", JSON.stringify(cart));
+			card.querySelector(".product-card__quantity-value").textContent = item.quantity;
+			document.getElementById("productModalQuantityValue").textContent = item.quantity;
+			updateHeaderCartCount();
+			updateProductQuantityUI(productId, item.quantity);
+		});
+		newMinusBtn.addEventListener("click", function (e) {
+			e.stopPropagation();
+			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+			let item = cart.find((i) => i.id === productId);
+			if (item && item.quantity > 0) {
+				item.quantity--;
 				if (item.quantity <= 0) {
 					cart = cart.filter((i) => i.id !== productId);
-					updateProductQuantityUI(productId, 0);
-				} else {
-					updateProductQuantityUI(productId, item.quantity);
 				}
-				setCart(cart);
+				localStorage.setItem("cart", JSON.stringify(cart));
+				card.querySelector(".product-card__quantity-value").textContent =
+					item.quantity > 0 ? item.quantity : 0;
+				document.getElementById("productModalQuantityValue").textContent =
+					item.quantity > 0 ? item.quantity : 0;
 				updateHeaderCartCount();
-			}
-		});
-		plusBtn.addEventListener("click", function (e) {
-			e.stopPropagation();
-			let cart = getCart();
-			let item = cart.find((i) => i.id === productId);
-			if (item) {
-				item.quantity += 1;
-				updateProductQuantityUI(productId, item.quantity);
-				setCart(cart);
-				updateHeaderCartCount();
+				updateProductQuantityUI(productId, item.quantity > 0 ? item.quantity : 0);
 			}
 		});
 	});
@@ -422,4 +437,127 @@
 	checkScroll();
 
 	window.addEventListener("scroll", checkScroll);
+
+	// --- Открытие модального окна ---
+	document.querySelectorAll(".product-card__title, .product-card__image").forEach((el) => {
+		el.addEventListener("click", function () {
+			const card = el.closest(".product-card");
+			const productId = card
+				.querySelector(".product-card__add-to-cart")
+				.getAttribute("data-product");
+			const title = card.querySelector(".product-card__title").textContent.trim();
+			const hashrateMatch = title.match(/([0-9]+\s?T[Hh])/);
+			const hashrate = hashrateMatch ? hashrateMatch[1] : "";
+			const efficiency = card
+				.querySelector(".product-card__info-item:nth-child(3) span")
+				.textContent.trim();
+			const power = card
+				.querySelector(".product-card__info-item:nth-child(2) span")
+				.textContent.trim();
+			const price = card.querySelector(".product-card__prcvalue").textContent.trim();
+			const image = card.querySelector("img").getAttribute("src");
+			// Количество из корзины
+			const cart = JSON.parse(localStorage.getItem("cart")) || [];
+			const cartItem = cart.find((i) => i.id === productId);
+			const quantity = cartItem ? cartItem.quantity : 0;
+
+			document.getElementById(
+				"productModalImage"
+			).innerHTML = `<img src="${image}" alt="${title}">`;
+			document.getElementById("productModalTitle").textContent = title;
+			document.getElementById(
+				"productModalHashrate"
+			).innerHTML = `<span class="product-modal__label">Hashrate: </span>${hashrate}`;
+			document.getElementById(
+				"productModalEfficiency"
+			).innerHTML = `<span class="product-modal__label">Power efficiency: </span> <span class="product-modal__accent">${efficiency}</span>`;
+			document.getElementById(
+				"productModalPriceHashrate"
+			).innerHTML = `<span class="product-modal__label">Price/T: </span><span class="product-modal__price-unit">$</span><span class="product-modal__accent">${(
+				price / parseFloat(hashrate)
+			).toFixed(1)}</span>`;
+			document.getElementById(
+				"productModalPower"
+			).innerHTML = `<span class="product-modal__label">Power: </span>${power}`;
+			document.getElementById(
+				"productModalPrice"
+			).innerHTML = `<span class="product-modal__label">Price: </span><span class="product-modal__price-container"><span class="product-modal__price-unit">$</span><span class="product-modal__price-value">${price}</span></span>`;
+			document.getElementById("productModalQuantityValue").textContent = quantity;
+			document.getElementById("productModal").setAttribute("data-product-id", productId);
+			document.getElementById("productModal").classList.add("active");
+			updateModalBuyNowBtnState(quantity);
+		});
+	});
+
+	document.getElementById("productModalClose").onclick = function () {
+		document.getElementById("productModal").classList.remove("active");
+	};
+	document.querySelector(".product-modal__overlay").onclick = function () {
+		document.getElementById("productModal").classList.remove("active");
+	};
+
+	// --- Quantity в модалке ---
+	document.querySelector(".product-modal__quantity-btn--plus").onclick = function () {
+		const modal = document.getElementById("productModal");
+		const productId = modal.getAttribute("data-product-id");
+		let cart = JSON.parse(localStorage.getItem("cart")) || [];
+		let item = cart.find((i) => i.id === productId);
+		if (item) {
+			item.quantity++;
+		} else {
+			// Получаем данные из карточки
+			const card = document
+				.querySelector(`.product-card__add-to-cart[data-product="${productId}"]`)
+				.closest(".product-card");
+			const name = card.querySelector(".product-card__title").textContent.trim();
+			const price = parseFloat(card.querySelector(".product-card__prcvalue").textContent.trim());
+			item = { id: productId, name, price, quantity: 1 };
+			cart.push(item);
+		}
+		localStorage.setItem("cart", JSON.stringify(cart));
+		document.getElementById("productModalQuantityValue").textContent = item.quantity;
+		updateProductQuantityUI(productId, item.quantity);
+		updateHeaderCartCount();
+		updateModalBuyNowBtnState(item.quantity);
+	};
+	document.querySelector(".product-modal__quantity-btn--minus").onclick = function () {
+		const modal = document.getElementById("productModal");
+		const productId = modal.getAttribute("data-product-id");
+		let cart = JSON.parse(localStorage.getItem("cart")) || [];
+		let item = cart.find((i) => i.id === productId);
+		if (item && item.quantity > 0) {
+			item.quantity--;
+			if (item.quantity <= 0) {
+				cart = cart.filter((i) => i.id !== productId);
+			}
+			localStorage.setItem("cart", JSON.stringify(cart));
+			document.getElementById("productModalQuantityValue").textContent =
+				item.quantity > 0 ? item.quantity : 0;
+			updateProductQuantityUI(productId, item.quantity > 0 ? item.quantity : 0);
+			updateHeaderCartCount();
+			updateModalBuyNowBtnState(item.quantity > 0 ? item.quantity : 0);
+		}
+	};
+
+	// --- Открытие корзины из модального окна ---
+	const modalBuyNowBtn = document.querySelector(".product-modal__buy-now");
+	if (modalBuyNowBtn) {
+		modalBuyNowBtn.onclick = function () {
+			document.getElementById("productModal").classList.remove("active");
+			const cartSidebar = document.getElementById("cartSidebar");
+			if (cartSidebar) {
+				cartSidebar.classList.add("active");
+				if (typeof lockBodyScroll === "function") lockBodyScroll();
+				if (typeof renderCartSidebar === "function") renderCartSidebar();
+			}
+		};
+	}
+
+	// Функция для обновления disabled у кнопки Go to Cart в модалке
+	function updateModalBuyNowBtnState(quantity) {
+		const modalBuyNowBtn = document.querySelector(".product-modal__buy-now");
+		if (modalBuyNowBtn) {
+			modalBuyNowBtn.disabled = quantity === 0;
+		}
+	}
 })();
