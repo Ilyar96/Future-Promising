@@ -1,6 +1,7 @@
 (function () {
 	// --- CART LOGIC START ---
 	const CART_KEY = "cart";
+	const MODAL_CLOSE_DELAY = 4_000;
 
 	function getCart() {
 		return JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -195,7 +196,6 @@
 	function lockBodyScroll() {
 		document.body.style.overflow = "hidden";
 		const scrollBarWidth = getScrollbarWidth();
-		console.log(scrollBarWidth);
 		if (scrollBarWidth > 0) {
 			document.body.style.paddingRight = scrollBarWidth + "px";
 			document.querySelector(".header").style.paddingRight = scrollBarWidth + "px";
@@ -398,7 +398,7 @@
 				modalForm.reset();
 				modalForm.style.display = "";
 			}, 300);
-		}, 2000);
+		}, MODAL_CLOSE_DELAY);
 	});
 
 	// --- SIDEBAR CART LOGIC END ---
@@ -421,7 +421,7 @@
 			openModal(contactSuccessModal);
 			setTimeout(() => {
 				closeModal(contactSuccessModal);
-			}, 2000);
+			}, MODAL_CLOSE_DELAY);
 		});
 	}
 	bindModalEvents(contactSuccessModal);
