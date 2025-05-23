@@ -266,7 +266,9 @@
 				<div class="cart-sidebar__item-title">${item.name}</div>
 				<div class="cart-sidebar__item-cart-footer">
 					<div class="cart-sidebar__item-quantity">
-						<button class="cart-sidebar__item-quantity-btn" data-action="minus" data-id="${item.id}">-</button>
+						<button class="cart-sidebar__item-quantity-btn" data-action="minus" data-id="${item.id}"${
+				item.quantity <= 1 ? " disabled" : ""
+			}>-</button>
 						<span class="cart-sidebar__item-quantity-value">${item.quantity}</span>
 						<button class="cart-sidebar__item-quantity-btn" data-action="plus" data-id="${item.id}">+</button>
 					</div>
